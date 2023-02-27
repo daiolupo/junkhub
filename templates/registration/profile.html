@@ -1,0 +1,23 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<div class="card mt-4 mx-4 p-4">
+<h2 class="display-6">Account Page</h2>
+<h4>{{ user.username }}</h4>
+<div>
+    <span>First Name: {{ user.first_name }}</span>
+    <br>
+    <span>Last Name: {{ user.last_name }}</span>
+    <br>
+    <span>Email: {{ user.email }}</span>
+    <br>
+    <span>Phone: {{ user.phone_number }}</span>
+</div>
+</div>
+<hr>
+    <div class="card-footer text-center text-muted">
+        <p>
+            <a href="{% url 'profile_edit' user.pk %}" class="btn btn-outline-dark ml-2"> Edit Details </a>
+        </p>
+    </div>
+{% endblock content %}

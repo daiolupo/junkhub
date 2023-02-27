@@ -1,0 +1,25 @@
+<!-- Home page for the app - shows all listings.
+     by John W. -->
+
+{% extends "home/base.html" %}
+{% block title %}Home Page{% endblock title%}
+{%block content %}
+<div class="cards" style="">
+    {% if item_list %}
+    {% for item in item_list %}
+    <div class="card mt-4 mx-4">
+        <div class="card-header bg-light" >
+            <span class="font-weight-bold text-secondary">
+                <a class="text-black fs-3" href="{% url 'item_detail' item.pk %}"> {{ item.title }} </a>
+            </span>
+            &middot;
+            <span class="text-muted fs-4"> by {{ item.user }} </span>
+        </div>
+    </div>
+    {%endfor%}
+    {% else %}
+    <div class="card mt-4 mx-4 p-4">
+        <h6 class="display-6">There are currently no items for sale, try listing one yourself by navigating to 'List Item' in the navbar above.</h1>
+    </div>
+    {% endif %}
+</div>{%endblock content%}

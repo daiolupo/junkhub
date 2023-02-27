@@ -1,0 +1,53 @@
+{% extends 'home/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="card m-4 p-4">
+  <h2 class="display-4" >{{ item.title }}</h2>
+    <h6 class="display-6  text-muted">Listed by {{ item.user }}</h4>
+  <div>
+      <p>{{ item.description }}</p>
+      <p>Asking Price: &#36;{{ item.price }}</p> 
+      <p>Condition: {{ item.condition }}</p>
+  </div>
+</div>
+<!--Code that displays all the comments below a listing-->
+<div class="list-group m-4">
+  <div class="list-group-item list-group-item-action p-4">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Comments</h5>
+    </div>
+    {% if item.comment_set.all %} {% for comment in item.comment_set.all %}
+    <div class="card mt-4">
+      <p class="mb-1 fs-5 px-2"> {{ comment.body }}</p>
+      <small class="text-muted px-2"> by {{ comment.author }} </small>
+    </div>
+    {% endfor %} {% else %}
+    <p class="mb-1 fs-5">No one's talking about this listing yet!</p>
+    {% endif %}
+  </div>
+</div>
+
+<!--Form for adding your own comments-->
+  <hr>
+  {% if user.is_authenticated %}
+  <div class="ml-4">
+    <h4 class="ml-2">Make a comment or ask a question</h4>
+    <form action="" method="post" class="ml-2">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button class="btn btn-dark ml-2" type="submit">publish</button>
+    </form>
+  </div>
+  {% else %}
+  <div class="ml-4">
+    <h4 class="ml-2">Log in to post a comment</h4>
+  </div>
+  {% endif %}
+<hr>
+  <div class="card-footer text-center text-muted">
+      <p>
+          <a href="{% url 'item_edit' item.pk %}" class="btn btn-outline-dark ml-2"> Edit </a> | <a href="{% url 'item_delete' item.pk %}" class="btn btn-outline-dark ml-2"> Delete </a>
+      </p>
+  </div>
+{% endblock content %}
